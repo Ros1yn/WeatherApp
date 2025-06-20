@@ -1,18 +1,29 @@
 package pl.ros1yn.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-public class OpenWeatherResponse {
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class WeatherDto {
 
-    public class FlatWeatherDto {
+    @JsonProperty("name")
+    private String city;
 
-        private String cityName;
-        private String country;
-        private double temperature;
-        private double windSpeed;
+    @JsonProperty("sys.country")
+    private String country;
 
+    @JsonProperty("main.temp")
+    private double temperature;
 
-    }
+    @JsonProperty("wind.speed")
+    private double windSpeed;
+
+}
