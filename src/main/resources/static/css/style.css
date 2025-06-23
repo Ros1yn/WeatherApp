@@ -1,0 +1,16 @@
+#title{
+    margin: 10px 10px 20px;
+    font-size: 4em;
+}
+#box{
+    background-color: #b5b5b5;
+    width: 25em;
+    height: 30em;
+    border-radius: 3em;
+}
+body{
+    padding: 0;
+    margin: 0;
+    justify-items: center;
+    background-color: aliceblue;
+}
