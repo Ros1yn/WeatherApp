@@ -1,5 +1,6 @@
 package pl.ros1yn.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Service
+@Slf4j
 public class WeatherService {
 
     @Value("${openweather.api.key}")
@@ -51,14 +53,14 @@ public class WeatherService {
 
         } catch (HttpClientErrorException.Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new Weather("Błąd autoryzacji", "ERR", 0, 0));
+                    .body(new Weather("Authorisation error", "ERR", 0, 0));
 
         } catch (Exception e) {
 
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new Weather("Błąd serwera", "ERR", 0, 0));
+                    .body(new Weather("Server error", "ERR", 0, 0));
         }
 
     }
