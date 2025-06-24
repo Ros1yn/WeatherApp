@@ -12,20 +12,20 @@ import pl.ros1yn.service.WeatherService;
 
 @Controller
 @RequiredArgsConstructor
-public class ViewController {
+class ViewController {
 
     private final WeatherService weatherService;
 
     private static final String WEATHER = "weather";
 
     @GetMapping("/weather")
-    public String home(Model model) {
+    String home(Model model) {
         model.addAttribute("title", "Weather☀️");
         return WEATHER;
     }
 
     @PostMapping("/weather")
-    public String getWeather(@RequestParam String city, Model model) {
+    String getWeather(@RequestParam String city, Model model) {
         ResponseEntity<Weather> response = weatherService.getWeatherByCity(city);
         if (response.getStatusCode().is2xxSuccessful()) {
             model.addAttribute(WEATHER, response.getBody());
