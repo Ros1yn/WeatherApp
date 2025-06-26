@@ -1,10 +1,6 @@
 package pl.ros1yn.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,17 +10,18 @@ import org.springframework.web.client.RestTemplate;
 import pl.ros1yn.dto.WeatherDto;
 import pl.ros1yn.mapper.WeatherMapper;
 import pl.ros1yn.model.Weather;
+import pl.ros1yn.utils.WeatherAPIPath;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @Service
+@Slf4j
 public class WeatherService {
 
     @Value("${openweather.api.key}")
     private String apiKey;
 
-    private final String API_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
     private final RestTemplate restTemplate;
     private final WeatherMapper weatherMapper;
 
@@ -38,7 +35,7 @@ public class WeatherService {
         try {
 
             String encodedCity = URLEncoder.encode(city, StandardCharsets.UTF_8);
-            String url = API_URL + encodedCity
+            String url = WeatherAPIPath.API_PATH.getUrl() + encodedCity
                     + "&appid=" + apiKey
                     + "&units=metric";
 
@@ -56,17 +53,16 @@ public class WeatherService {
 
         } catch (HttpClientErrorException.Unauthorized e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                    .body(new Weather("Błąd autoryzacji", "ERR", 0, 0));
+                    .body(new Weather("Authorisation error", "ERR", 0, 0));
 
         } catch (Exception e) {
 
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
 
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new Weather("Błąd serwera", "ERR", 0, 0));
+                    .body(new Weather("Server error", "ERR", 0, 0));
         }
 
     }
-
 
 }

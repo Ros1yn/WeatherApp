@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pogoda</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="center-form">
+        <form th:action="@{/weather}" method="post" class="weather-form">
+
+            <h1>Check weather in your city</h1>
+
+            <label>
+                <input type="text" name="city" placeholder="Enter the city" required>
+            </label>
+
+            <button type="submit">Show weather</button>
+
+            <div th:if="${error}" class="error" th:text="${error}"></div>
+        </form>
+    </div>
+</body>
+</html>

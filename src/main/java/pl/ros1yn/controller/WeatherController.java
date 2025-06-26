@@ -10,7 +10,7 @@ import pl.ros1yn.service.WeatherService;
 
 @RestController
 @RequiredArgsConstructor
-public class WeatherController {
+class WeatherController {
 
     private final WeatherService weatherService;
 

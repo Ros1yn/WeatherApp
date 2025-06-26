@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wynik pogody</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="center-form">
+        <div class="weather-result">
+
+            <h2 th:text="${weather.city} + ', ' + ${weather.country}">Miasto, Kraj</h2>
+
+            <p>Temperature: <span th:text="${weather.temperature}"></span> °C</p>
+            <p>Wind speed: <span th:text="${weather.windSpeed}"></span> m/s</p>
+
+            <a th:href="@{/weather}" class="back-link">Go back</a>
+        </div>
+    </div>
+</body>
+</html>
