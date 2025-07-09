@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-import pl.ros1yn.dto.WeatherDto;
 import pl.ros1yn.model.Weather;
 
 @Component
@@ -14,7 +13,7 @@ public class WeatherMapper {
 
     private final ObjectMapper objectMapper;
 
-    public WeatherDto extractWeatherData(String jsonResponse) {
+    public Weather extractWeatherData(String jsonResponse) {
 
         try {
             JsonNode jsonNode = objectMapper.readTree(jsonResponse);
@@ -32,16 +31,14 @@ public class WeatherMapper {
 
     }
 
-    public Weather convertToWeather(WeatherDto weatherDto) {
+    public Weather build(JsonNode jsonNode, JsonNode mainNode, JsonNode windNode, JsonNode sysNode) {
         return Weather.builder()
-                .city(weatherDto.getCity())
-                .country(weatherDto.getCountry())
-                .temperature(weatherDto.getTemperature())
-                .windSpeed(weatherDto.getWindSpeed())
+                .city(jsonNode.path("name").asText())
+                .temperature(mainNode.path("temp").asDouble())
+                .windSpeed(windNode.path("speed").asDouble())
+                .country(sysNode.path("country").asText())
                 .build();
     }
 
-    private WeatherDto build(JsonNode jsonNode, JsonNode mainNode, JsonNode windNode, JsonNode sysNode) {
-        return WeatherDto.builder().city(jsonNode.path("name").asText()).temperature(mainNode.path("temp").asDouble()).windSpeed(windNode.path("speed").asDouble()).country(sysNode.path("country").asText()).build();
-    }
+
 }

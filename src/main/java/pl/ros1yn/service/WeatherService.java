@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import pl.ros1yn.dto.WeatherDto;
 import pl.ros1yn.mapper.WeatherMapper;
 import pl.ros1yn.model.Weather;
 import pl.ros1yn.utils.WeatherAPIPath;
@@ -41,9 +40,7 @@ public class WeatherService {
 
             String jsonResponse = restTemplate.getForObject(url, String.class);
 
-            WeatherDto weatherDto = weatherMapper.extractWeatherData(jsonResponse);
-
-            Weather weather = weatherMapper.convertToWeather(weatherDto);
+            Weather weather = weatherMapper.extractWeatherData(jsonResponse);
 
             return ResponseEntity.ok(weather);
 
