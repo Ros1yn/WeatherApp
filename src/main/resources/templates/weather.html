@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="eng">
 <head>
     <meta charset="UTF-8">
     <title>Pogoda</title>
@@ -9,7 +9,7 @@
     <div class="center-form">
         <form th:action="@{/weather}" method="post" class="weather-form">
 
-            <h1>Check weather in your city</h1>
+            <h1 th:text="${title}"></h1>
 
             <label>
                 <input type="text" name="city" placeholder="Enter the city" required>
